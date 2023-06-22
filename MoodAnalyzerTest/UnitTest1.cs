@@ -5,35 +5,27 @@ namespace MoodAnalyzerTest
     [TestClass]
     public class UnitTest1
     {
-        private readonly MoodAnalyzer.Mood mood;
-
-        public UnitTest1()
-        {
-            mood = new MoodAnalyzer.Mood();
-        }
         //TestCase1.1 --- Return Sad
         [TestMethod]
         public void Given_Mood_Sad_Should_Return_Sad()
         {
-            //Arrange
-            string expectectResult = "Sad";
+            Mood mood = new Mood("I am in Sad Mood");
 
-            //Act
-            string result = mood.AnalyzeMood("I am in sad Mood");
+            string result = mood.AnalyzeMood();
 
-            //Assert
-            Assert.AreEqual(expectectResult,result);
-
+            Assert.AreEqual("SAD", result);
         }
 
+        //TestCase1.2 --- Return Happy
         [TestMethod]
         public void Given_Mood_Happy_Should_Return_Happy()
         {
-            string expectedresult = "Happy";
+            Mood mood = new Mood("I am in Happy Mood");
 
-            string result = mood.AnalyzeMood("I am in Happy Mood");
 
-            Assert.AreEqual(expectedresult,result);
+            string result = mood.AnalyzeMood();
+
+            Assert.AreEqual("HAPPY", result);
         }
     }
 }
