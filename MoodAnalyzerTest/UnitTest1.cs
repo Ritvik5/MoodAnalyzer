@@ -29,19 +29,49 @@ namespace MoodAnalyzerTest
         }
 
         //TestCase2.1 -- Null mood Exception
+        //[TestMethod]
+        //public void GivenNullMood_ShouldReturn_Happy()
+        //{
+        //    //Arrange
+        //    string input = null;
+        //    Mood mood = new Mood(input);
+
+        //    //Act
+        //    string result = mood.AnalyzeMood();
+
+        //    //Assert
+        //    Assert.AreEqual("HAPPY", result);
+        //}
+
+        //TestCase3.1 -- Custom Exception
         [TestMethod]
-        public void GivenNullMood_ShouldReturn_Happy()
+        public void GivenEmptyMood_ShouldThrow_Exception()
         {
-            //Arrange
-            string input = null;
-            Mood mood = new Mood(input);
-
-            //Act
-            string result = mood.AnalyzeMood();
-
-            //Assert
-            Assert.AreEqual("HAPPY", result);
+            try
+            {
+                string message = "";
+                Mood moodAnalyse = new Mood(message);
+                string mood = moodAnalyse.AnalyzeMood();
+            }
+            catch (MoodAnalyzerCustomException exeption)
+            {
+                Assert.AreEqual("Mood should not be empty", exeption.Message);
+            }
         }
 
+        [TestMethod]
+        public void GivenNullMood_ShouldThrow_Exception()
+        {
+            try
+            {
+                string message = null;
+                Mood moodAnalyse = new Mood(message);
+                string mood = moodAnalyse.AnalyzeMood();
+            }
+            catch (MoodAnalyzerCustomException exeption)
+            {
+                Assert.AreEqual("Mood should not be null", exeption.Message);
+            }
+        }
     }
 }
