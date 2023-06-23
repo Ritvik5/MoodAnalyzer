@@ -27,5 +27,21 @@ namespace MoodAnalyzerTest
 
             Assert.AreEqual("HAPPY", result);
         }
+
+        //TestCase2.1 -- Null mood Exception
+        [TestMethod]
+        public void GivenNullMood_ShouldReturn_Happy()
+        {
+            //Arrange
+            string input = null;
+            Mood mood = new Mood(input);
+
+            //Act
+            string result = mood.AnalyzeMood();
+
+            //Assert
+            Assert.AreEqual("HAPPY", result);
+        }
+
     }
 }
