@@ -119,5 +119,17 @@ namespace MoodAnalyzerTest
                 Assert.AreEqual(expected, exception.Message);
             }
         }
+        [TestMethod]
+        public void GivenMoodClassName_ShouldReturnMoodObject_UsingParameterisedConstructor()
+        {
+            //Arrange
+            object expected = new Mood("HAPPY");
+
+            //Act
+            object result = MoodAnalyzerFactory.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.Mood", "Mood", "HAPPY");
+
+            //Assert
+            expected.Equals(result);
+        }
     }
 }
