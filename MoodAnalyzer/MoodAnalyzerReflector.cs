@@ -8,8 +8,19 @@ using System.Threading.Tasks;
 
 namespace MoodAnalyzer
 {
-    public class MoodAnalyzerFactory
+    public class MoodAnalyzerReflector
     {
+
+        public static string Reflector(string methodName,string message)
+        {
+            Mood obj = new Mood(message);
+            Type type = typeof(Mood);
+
+            MethodInfo methodInfo = type.GetMethod(methodName);
+            string mood = (string)methodInfo.Invoke(obj, null);
+            return mood;
+
+        }
         public static object CreateMoodAnalyzerUsingParameterisedConstructor(string className,string constructorName,string message)
         {
             Type type = typeof(Mood);

@@ -8,7 +8,7 @@
         {
             Console.WriteLine("Welcome to Mood Analyzer \n");
 
-            Mood moodSad = new Mood(Sad_Mood);
+            Mood moodSad = new Mood("I am in Happy Mood");
             moodSad.AnalyzeMood();
         }
     }
