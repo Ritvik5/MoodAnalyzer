@@ -104,7 +104,7 @@ namespace MoodAnalyzerTest
             }
         }
 
-        //TestCase4.2 --Wrong class name
+        //TestCase4.3 --Wrong Constructor name
         [TestMethod]
         public void GivenImproperConstructorName_ShouldThrow_MoodAnalyzerCustomException()
         {
@@ -119,6 +119,7 @@ namespace MoodAnalyzerTest
                 Assert.AreEqual(expected, exception.Message);
             }
         }
+        //TestCase5.1 --Using Parameterised Custructor
         [TestMethod]
         public void GivenMoodClassName_ShouldReturnMoodObject_UsingParameterisedConstructor()
         {
@@ -130,6 +131,25 @@ namespace MoodAnalyzerTest
 
             //Assert
             expected.Equals(result);
+        }
+
+        //TestCase5.2 --Using Parameterised Custructor passing wrong class name
+        [TestMethod]
+        public void GivenWrongMoodClassName_ShouldReturnMoodObject_UsingParameterisedConstructor()
+        {
+            //Arrange
+            string expected = "Class  Not Found";
+
+            try
+            {
+                //Act
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.WMood", "Mood", "HAPPY");
+            }
+            catch(MoodAnalyzerCustomException exception)
+            {
+                //Assert
+                Assert.AreEqual (expected, exception.Message);
+            }
         }
     }
 }
