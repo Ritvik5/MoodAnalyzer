@@ -74,6 +74,7 @@ namespace MoodAnalyzerTest
             }
         }
 
+        //--TetsCase4.1 -- Checking object
         [TestMethod]
         public void GivenMoodClassName_ShouldReturn_MoodObject()
         {
@@ -81,19 +82,36 @@ namespace MoodAnalyzerTest
             object expected = new Mood();
 
             //Act
-            object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Mood");
+            object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Mood","Mood");
 
             //Assert
             expected.Equals(result);
         }
 
+        //TestCase4.2 --Wrong class name
         [TestMethod]
         public void GivenImproperClassName_ShouldThrow_MoodAnalyzerCustomException()
         {
             string expected = "Class  Not Found";
             try
             {
-                object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Wmood");
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Wmood", "Mood");
+            }
+            catch (MoodAnalyzerCustomException exception)
+            {
+
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
+
+        //TestCase4.2 --Wrong class name
+        [TestMethod]
+        public void GivenImproperConstructorName_ShouldThrow_MoodAnalyzerCustomException()
+        {
+            string expected = "Constructor not found";
+            try
+            {
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Mood", "WMood");
             }
             catch (MoodAnalyzerCustomException exception)
             {

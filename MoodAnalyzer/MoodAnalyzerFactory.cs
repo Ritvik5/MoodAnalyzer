@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MoodAnalyzer
@@ -10,21 +11,32 @@ namespace MoodAnalyzer
     public class MoodAnalyzerFactory
     {
 
-        public static object CreateMoodAnalyzer(string className)
+        public static object CreateMoodAnalyzer(string className,string constructorName)
         {
-			try
-			{
-                Assembly assembly = Assembly.GetExecutingAssembly();
+            string apttern = @"."+constructorName+"$";
+            Match result = Regex.Match(className, apttern);
 
-                Type type = assembly.GetType(className);
+            if(result.Success)
+            {
+                try
+                {
+                    Assembly assembly = Assembly.GetExecutingAssembly();
 
-                return Activator.CreateInstance(type);
+                    Type type = assembly.GetType(className);
+
+                    return Activator.CreateInstance(type);
+                }
+                catch (ArgumentNullException)
+                {
+
+                    throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Class, "Class  Not Found");
+                }
             }
-			catch (ArgumentNullException)
-			{
-
-				throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Class, "Class  Not Found");
-			}
+            else
+            {
+                throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Method, "Constructor not found");
+            }
+			
         }
     }
 }

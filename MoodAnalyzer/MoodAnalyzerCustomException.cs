@@ -12,7 +12,8 @@ namespace MoodAnalyzer
         {
             NullMessage,
             EmptyMessage,
-            No_Such_Class
+            No_Such_Class,
+            No_Such_Method
         }
 
         private readonly ExceptionType type;
