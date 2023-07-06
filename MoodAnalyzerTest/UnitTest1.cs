@@ -151,5 +151,24 @@ namespace MoodAnalyzerTest
                 Assert.AreEqual (expected, exception.Message);
             }
         }
+
+        //TestCase5.3 --Using Parameterised Custructor passing wrong constructor name
+        [TestMethod]
+        public void GivenWrongMoodConstructorName_ShouldReturnMoodObject_UsingParameterisedConstructor()
+        {
+            //Arrange
+            string expected = "Constructor not found";
+
+            try
+            {
+                //Act
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.Mood", "WMood", "HAPPY");
+            }
+            catch (MoodAnalyzerCustomException exception)
+            {
+                //Assert
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
     }
 }
