@@ -86,5 +86,20 @@ namespace MoodAnalyzerTest
             //Assert
             expected.Equals(result);
         }
+
+        [TestMethod]
+        public void GivenImproperClassName_ShouldThrow_MoodAnalyzerCustomException()
+        {
+            string expected = "Class  Not Found";
+            try
+            {
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Wmood");
+            }
+            catch (MoodAnalyzerCustomException exception)
+            {
+
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
     }
 }

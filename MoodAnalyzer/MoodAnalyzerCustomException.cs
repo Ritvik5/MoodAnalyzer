@@ -11,7 +11,8 @@ namespace MoodAnalyzer
         public enum ExceptionType
         {
             NullMessage,
-            EmptyMessage
+            EmptyMessage,
+            No_Such_Class
         }
 
         private readonly ExceptionType type;

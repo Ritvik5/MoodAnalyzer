@@ -12,11 +12,19 @@ namespace MoodAnalyzer
 
         public static object CreateMoodAnalyzer(string className)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
+			try
+			{
+                Assembly assembly = Assembly.GetExecutingAssembly();
 
-            Type type = assembly.GetType(className);
+                Type type = assembly.GetType(className);
 
-            return Activator.CreateInstance(type);
+                return Activator.CreateInstance(type);
+            }
+			catch (ArgumentNullException)
+			{
+
+				throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Class, "Class  Not Found");
+			}
         }
     }
 }
