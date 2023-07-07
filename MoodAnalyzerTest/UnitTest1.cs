@@ -206,6 +206,7 @@ namespace MoodAnalyzerTest
             Assert.AreEqual("HAPPY", result);
         }
 
+        //TestCase8.2 -- Setting Improper Field Value 
         [TestMethod]
         public void GivenImproperFieldValue_ShouldReturn_NoSuchField()
         {
@@ -215,6 +216,21 @@ namespace MoodAnalyzerTest
                 string result = MoodAnalyzerReflector.ChangeMood("Wmessage", "I am in Happy Mood");
             }
             catch(MoodAnalyzerCustomException exception)
+            {
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
+
+        //TestCase8.2 -- Setting Null Message 
+        [TestMethod]
+        public void GivenNullMessage_ShouldReturn_NoSuchField()
+        {
+            string expected = "Message should not be null";
+            try
+            {
+                string result = MoodAnalyzerReflector.ChangeMood("message", null);
+            }
+            catch (MoodAnalyzerCustomException exception)
             {
                 Assert.AreEqual(expected, exception.Message);
             }
