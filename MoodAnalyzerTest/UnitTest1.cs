@@ -82,7 +82,7 @@ namespace MoodAnalyzerTest
             object expected = new Mood();
 
             //Act
-            object result = MoodAnalyzerReflector.CreateMoodAnalyzer("MoodAnalyzer.Mood","Mood");
+            object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Mood","Mood");
 
             //Assert
             expected.Equals(result);
@@ -95,7 +95,7 @@ namespace MoodAnalyzerTest
             string expected = "Class  Not Found";
             try
             {
-                object result = MoodAnalyzerReflector.CreateMoodAnalyzer("MoodAnalyzer.Wmood", "Mood");
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Wmood", "Mood");
             }
             catch (MoodAnalyzerCustomException exception)
             {
@@ -111,7 +111,7 @@ namespace MoodAnalyzerTest
             string expected = "Constructor not found";
             try
             {
-                object result = MoodAnalyzerReflector.CreateMoodAnalyzer("MoodAnalyzer.Mood", "WMood");
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzer("MoodAnalyzer.Mood", "WMood");
             }
             catch (MoodAnalyzerCustomException exception)
             {
@@ -127,7 +127,7 @@ namespace MoodAnalyzerTest
             object expected = new Mood("HAPPY");
 
             //Act
-            object result = MoodAnalyzerReflector.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.Mood", "Mood", "HAPPY");
+            object result = MoodAnalyzerFactory.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.Mood", "Mood", "HAPPY");
 
             //Assert
             expected.Equals(result);
@@ -143,7 +143,7 @@ namespace MoodAnalyzerTest
             try
             {
                 //Act
-                object result = MoodAnalyzerReflector.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.WMood", "Mood", "HAPPY");
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.WMood", "Mood", "HAPPY");
             }
             catch(MoodAnalyzerCustomException exception)
             {
@@ -162,7 +162,7 @@ namespace MoodAnalyzerTest
             try
             {
                 //Act
-                object result = MoodAnalyzerReflector.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.Mood", "WMood", "HAPPY");
+                object result = MoodAnalyzerFactory.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.Mood", "WMood", "HAPPY");
             }
             catch (MoodAnalyzerCustomException exception)
             {
@@ -178,6 +178,24 @@ namespace MoodAnalyzerTest
             string result = MoodAnalyzerReflector.Reflector("AnalyzeMood", "I am in Happy Mood");
 
             Assert.AreEqual("HAPPY", result);
+        }
+
+        //TestCase7.2 -- Passing wrong method name
+        [TestMethod]
+        public void GivenWrongMethodNameUsingReflection_ShouldReturn_NoSuchMethod()
+        {
+            string expected = "No Such method found";
+            try
+            {
+                string result = MoodAnalyzerReflector.Reflector("Analyze", "I am in Happy Mood");
+
+            }
+            catch(MoodAnalyzerCustomException exception)
+            {
+                //expected.Equals(exception.Message);
+                Assert.AreEqual("No Such method found", exception.Message);
+            }
+            
         }
     }
 }

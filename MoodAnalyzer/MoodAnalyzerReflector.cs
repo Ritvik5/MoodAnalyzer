@@ -3,72 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MoodAnalyzer
 {
     public class MoodAnalyzerReflector
     {
-
-        public static string Reflector(string methodName,string message)
+        public static string Reflector(string methodName, string message)
         {
-            Mood obj = new Mood(message);
-            Type type = typeof(Mood);
-
-            MethodInfo methodInfo = type.GetMethod(methodName);
-            string mood = (string)methodInfo.Invoke(obj, null);
-            return mood;
-
-        }
-        public static object CreateMoodAnalyzerUsingParameterisedConstructor(string className,string constructorName,string message)
-        {
-            Type type = typeof(Mood);
-            if(type.Name.Equals(className) || type.FullName.Equals(className))
+            try
             {
-                if (type.Name.Equals(constructorName))
-                {
-                    ConstructorInfo info = type.GetConstructor(new Type[] { typeof(string) });
-                    object instance = info.Invoke(new object[] { message });
-                    return instance;
-                }
-                else
-                {
-                    throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Method, "Constructor not found");
-                }
+                //Type type = typeof(MoodAnalyzer.Mood);
+                Type type = Type.GetType("MoodAnalyzer.Mood");
+
+                //Mood moodInstance = (Mood)Activator.CreateInstance(type);
+                object moodAnalyzerObject = MoodAnalyzerFactory.CreateMoodAnalyzerUsingParameterisedConstructor("MoodAnalyzer.Mood", "Mood", message);
+
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                object moodObj = methodInfo.Invoke(moodAnalyzerObject, null);
+                return moodObj.ToString();
             }
-            else
+            catch (NullReferenceException)
             {
-                throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Class, "Class  Not Found");
+                throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Method, "No Such method found");
             }
-        }
-
-        public static object CreateMoodAnalyzer(string className,string constructorName)
-        {
-            string apttern = @"."+constructorName+"$";
-            Match result = Regex.Match(className, apttern);
-
-            if(result.Success)
-            {
-                try
-                {
-                    Assembly assembly = Assembly.GetExecutingAssembly();
-
-                    Type type = assembly.GetType(className);
-
-                    return Activator.CreateInstance(type);
-                }
-                catch (ArgumentNullException)
-                {
-
-                    throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Class, "Class  Not Found");
-                }
-            }
-            else
-            {
-                throw new MoodAnalyzerCustomException(MoodAnalyzerCustomException.ExceptionType.No_Such_Method, "Constructor not found");
-            }
-			
         }
     }
 }
