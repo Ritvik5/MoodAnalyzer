@@ -197,5 +197,13 @@ namespace MoodAnalyzerTest
             }
             
         }
+
+        //TestCase8.1--Set the Field value
+        [TestMethod]
+        public void GivenHappyMessageUsingReflector_ShouldReturn_HappyMessage()
+        {
+            string result = MoodAnalyzerReflector.ChangeMood("message", "I am in Happy Mood");
+            Assert.AreEqual("HAPPY", result);
+        }
     }
 }

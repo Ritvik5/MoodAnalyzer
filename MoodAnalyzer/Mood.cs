@@ -8,13 +8,7 @@ namespace MoodAnalyzer
 {
     public class Mood
     {
-        string message;
-        public string className;
-        public string constructorName;
-
-        public Mood(string className,string constructorName)
-        {
-        }
+        public string message;
         public Mood() 
         {
         }
