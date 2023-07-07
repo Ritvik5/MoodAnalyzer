@@ -205,5 +205,19 @@ namespace MoodAnalyzerTest
             string result = MoodAnalyzerReflector.ChangeMood("message", "I am in Happy Mood");
             Assert.AreEqual("HAPPY", result);
         }
+
+        [TestMethod]
+        public void GivenImproperFieldValue_ShouldReturn_NoSuchField()
+        {
+            string expected = "Field Not Found";
+            try
+            {
+                string result = MoodAnalyzerReflector.ChangeMood("Wmessage", "I am in Happy Mood");
+            }
+            catch(MoodAnalyzerCustomException exception)
+            {
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
     }
 }
